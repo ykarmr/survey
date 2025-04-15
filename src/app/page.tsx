@@ -4,7 +4,7 @@ import { action } from "@/util/action";
 import { useState } from "react";
 
 export default function Home() {
-  const [state, setState] = useState<null | "ok" | "ng">("ok");
+  const [state, setState] = useState<null | "ok" | "ng">(null);
 
   const onclick = async () => {
     const state = await action();
