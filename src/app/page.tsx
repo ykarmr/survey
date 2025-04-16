@@ -7,7 +7,7 @@ export default function Home() {
   const [state, setState] = useState<null | "ok" | "ng">(null);
 
   const onclick = async () => {
-    const res = await action3({ a: 1, b: 2 });
+    const res = await action3(JSON.stringify({ a: 1, b: 2 }));
     setState(res);
   };
   return (
