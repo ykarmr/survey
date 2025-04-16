@@ -5,6 +5,8 @@ const logger = pino();
 
 export const action = async () => {
   try {
+    const array = ["test", "test"];
+    console.log({ length: array.length });
     const headers = new Headers();
 
     headers.append("Content-Type", "application/json");
