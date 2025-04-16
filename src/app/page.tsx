@@ -7,6 +7,7 @@ export default function Home() {
   const [state, setState] = useState<null | "ok" | "ng">(null);
 
   const onclick = async () => {
+    console.log(typeof BigInt64Array);
     const res = await action3({ a: 1, b: 2 });
     setState(res);
   };
