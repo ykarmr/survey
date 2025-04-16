@@ -90,11 +90,11 @@ export async function request<T>(
 
     // ステータスコードが 400 ~ 599の場合
     if (res.status >= 400 && res.status <= 599) {
-      const logObj = {
-        msg: `${method} ${path} response received`,
+      // const logObj = {
+      //   msg: `${method} ${path} response received`,
 
-        status: res.status,
-      };
+      //   status: res.status,
+      // };
 
       // ステータスコードが 400 ~ 499の場合は、警告にする
       if (res.status <= 499) {
