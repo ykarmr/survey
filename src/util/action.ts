@@ -40,12 +40,12 @@ type CustomRequestInit = RequestInit & {
  * @returns 成功時はデータ（T型）を含む Result、失敗時は Error を含む Result を返す
  */
 export async function request<T>(
-  path: string,
+  // path: string,
   init?: CustomRequestInit
 ): Promise<Result<T>> {
   // const logger = await getLogger();
 
-  let url = "https://jsonplaceholder.typicode.com" + path;
+  let url = "https://jsonplaceholder.typicode.com" + "/posts";
   const query = init?.query;
   if (query) {
     url = url + `?${toQueryString(query)}`;
@@ -74,17 +74,23 @@ export async function request<T>(
     //   msg: `${method} ${path} request`,
     // });
 
-    let body;
-    if (method === "POST") {
-      // Tanuki-BEのバリデーションの都合で、空オブジェクトを渡している
-      body = init?.body ?? JSON.stringify({});
-    }
+    // let body;
+    // if (method === "POST") {
+    //   // Tanuki-BEのバリデーションの都合で、空オブジェクトを渡している
+    //   body = init?.body ?? JSON.stringify({});
+    // }
 
     const res = await fetch(url, {
       cache: "no-store",
       headers: headers,
-      method,
-      body,
+      method: "POST",
+      body: JSON.stringify({
+        userId: 1,
+        id: 1,
+        title:
+          "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+      }),
       ...init,
     });
 
