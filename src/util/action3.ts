@@ -1,6 +1,6 @@
 "use server";
 
-export const action3 = async (obj: string) => {
+export const action3 = async (obj: object) => {
   try {
     console.log(obj);
 
