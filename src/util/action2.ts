@@ -8,9 +8,9 @@ export const action2 = async (path: string, init?: RequestInit) => {
     ...init?.headers,
   });
 
-  if (method === "POST") {
-    headers.append("Content-Type", "application/json");
-  }
+  //   if (method === "POST") {
+  //     headers.append("Content-Type", "application/json");
+  //   }
 
   try {
     const res = await fetch(url, {
