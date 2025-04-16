@@ -1,8 +1,12 @@
 "use server";
 
-export const action2 = async (path: string, init?: RequestInit) => {
+export const action2 = async (path: string, init?: RequestInit | string) => {
+  if (typeof init === "string") {
+    init = JSON.parse(init) as RequestInit;
+  }
+
   const url = "https://jsonplaceholder.typicode.com" + path;
-  const method = init?.method ?? "POST";
+  const method = init?.method ?? "GET";
 
   const headers = new Headers({
     ...init?.headers,

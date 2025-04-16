@@ -1,14 +1,25 @@
 "use client";
 
-import { action3 } from "@/util/action3";
+import { action2 } from "@/util/action2";
 import { useState } from "react";
 
 export default function Home() {
   const [state, setState] = useState<null | "ok" | "ng">(null);
 
   const onclick = async () => {
-    console.log({ BigInt64Array: typeof BigInt64Array });
-    const res = await action3({ a: 1, b: 2 });
+    const res = await action2(
+      "/posts",
+      JSON.stringify({
+        method: "POST",
+        body: JSON.stringify({
+          userId: 1,
+          id: 1,
+          title:
+            "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+          body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+        }),
+      })
+    );
     setState(res);
   };
   return (
