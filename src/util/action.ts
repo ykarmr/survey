@@ -13,8 +13,6 @@ interface Success<T> {
 
 interface Failure {
   isOk: false;
-  errorCode?: string;
-  subErrorCode?: string;
 }
 
 type QueryParams = Record<string, string | number>;
@@ -92,14 +90,9 @@ export async function request<T>(
 
     // ステータスコードが 400 ~ 599の場合
     if (res.status >= 400 && res.status <= 599) {
-      const errorCode = res.headers.get("Tanuki-Error-Code") ?? undefined;
-      const subErrorCode =
-        res.headers.get("Tanuki-Sub-Error-Code") ?? undefined;
-
       const logObj = {
         msg: `${method} ${path} response received`,
-        errorCode,
-        subErrorCode,
+
         status: res.status,
       };
 
@@ -114,8 +107,6 @@ export async function request<T>(
 
       return {
         isOk: false,
-        errorCode,
-        subErrorCode,
       };
     }
 

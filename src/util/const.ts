@@ -1,2 +1,2 @@
-export const REQUEST_ID_HEADER = "Tanuki-Fe-Request-Id";
-export const PATH_HEADER = "Tanuki-Fe-Path";
+export const REQUEST_ID_HEADER = "X-Request-Id";
+export const PATH_HEADER = "X-Path";
