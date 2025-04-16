@@ -26,7 +26,7 @@ export const action2 = async (path: string, init?: RequestInit | string) => {
     const json = await res.json();
     console.log(json);
 
-    return "ok";
+    return json;
   } catch (error) {
     console.log(error);
     return "ng";
