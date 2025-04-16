@@ -8,7 +8,10 @@ export default function Home() {
 
   const onclick = async () => {
     const res = await action2(
-      "/posts"
+      "/posts",
+      {
+        method: "POST",
+      }
       //   {
       //   method: "POST",
       //   body: JSON.stringify({
