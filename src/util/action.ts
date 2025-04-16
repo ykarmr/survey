@@ -1,14 +1,17 @@
 "use server";
-import { cookies } from "next/headers";
 import pino from "pino";
 
 const logger = pino();
 
 export const action = async () => {
   try {
-    const cookieStore = await cookies();
+    const res = await fetch("https://jsonplaceholder.typicode.com/todos/1", {
+      cache: "no-store",
+    });
 
-    logger.info(JSON.stringify(cookieStore.getAll()));
+    const json = await res.json();
+
+    logger.info(json);
     return "ok";
   } catch {
     return "ng";
