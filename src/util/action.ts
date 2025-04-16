@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 
 import "server-only";
-import { getLogger } from "./logger";
+// import { getLogger } from "./logger";
 
 type Result<T> = Success<T> | Failure;
 
@@ -43,7 +43,7 @@ export async function request<T>(
   path: string,
   init?: CustomRequestInit
 ): Promise<Result<T>> {
-  const logger = await getLogger();
+  // const logger = await getLogger();
 
   let url = "https://jsonplaceholder.typicode.com" + path;
   const query = init?.query;
@@ -70,9 +70,9 @@ export async function request<T>(
     }
 
     // リクエストログ
-    logger.info({
-      msg: `${method} ${path} request`,
-    });
+    // logger.info({
+    //   msg: `${method} ${path} request`,
+    // });
 
     let body;
     if (method === "POST") {
@@ -99,10 +99,10 @@ export async function request<T>(
       // ステータスコードが 400 ~ 499の場合は、警告にする
       if (res.status <= 499) {
         // API警告レスポンスログ
-        logger.warn(logObj);
+        // logger.warn(logObj);
       } else {
         // ステータスコードが 500 ~ 599の場合は、エラーにする
-        logger.error(logObj);
+        // logger.error(logObj);
       }
 
       return {
@@ -113,11 +113,11 @@ export async function request<T>(
     const data = (await res.json()) as T;
 
     // APIレスポンス正常ログ
-    logger.info({
-      msg: `${method} ${path} response received`,
-      result: data,
-      status: res.status,
-    });
+    // logger.info({
+    //   msg: `${method} ${path} response received`,
+    //   result: data,
+    //   status: res.status,
+    // });
 
     return {
       isOk: true,
@@ -126,10 +126,10 @@ export async function request<T>(
   } catch (error: unknown) {
     if (error instanceof Error) {
       // ネットワークや環境による通信失敗
-      logger.error({
-        msg: `Exception Error: ${error.message}`,
-        error,
-      });
+      // logger.error({
+      //   msg: `Exception Error: ${error.message}`,
+      //   error,
+      // });
 
       return {
         isOk: false,
@@ -137,10 +137,10 @@ export async function request<T>(
     }
 
     // 予期せぬエラー
-    logger.error({
-      msg: `Unknown error`,
-      error,
-    });
+    // logger.error({
+    //   msg: `Unknown error`,
+    //   error,
+    // });
 
     return {
       isOk: false,
