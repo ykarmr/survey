@@ -1,13 +1,13 @@
 "use client";
 
-import { action2 } from "@/util/action2";
+import { request } from "@/util/action";
 import { useState } from "react";
 
 export default function Home() {
   const [state, setState] = useState<null | object | "ng">(null);
 
   const onclick = async () => {
-    const res = await action2(
+    const res = await request(
       "/posts",
       JSON.stringify({
         method: "POST",

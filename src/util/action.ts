@@ -40,9 +40,13 @@ type CustomRequestInit = RequestInit & {
  * @returns 成功時はデータ（T型）を含む Result、失敗時は Error を含む Result を返す
  */
 export async function request<T>(
-  path: string = "posts",
-  init?: CustomRequestInit
+  path: string,
+  init?: CustomRequestInit | string
 ): Promise<Result<T>> {
+  if (typeof init === "string") {
+    init = JSON.parse(init) as CustomRequestInit;
+  }
+
   const logger = await getLogger();
 
   let url = "https://jsonplaceholder.typicode.com" + path;
@@ -74,23 +78,17 @@ export async function request<T>(
       msg: `${method} ${path} request`,
     });
 
-    // let body;
-    // if (method === "POST") {
-    //   // Tanuki-BEのバリデーションの都合で、空オブジェクトを渡している
-    //   body = init?.body ?? JSON.stringify({});
-    // }
+    let body;
+    if (method === "POST") {
+      // Tanuki-BEのバリデーションの都合で、空オブジェクトを渡している
+      body = init?.body ?? JSON.stringify({});
+    }
 
     const res = await fetch(url, {
       cache: "no-store",
       headers: headers,
-      method: "POST",
-      body: JSON.stringify({
-        userId: 1,
-        id: 1,
-        title:
-          "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
-      }),
+      method: method,
+      body,
       ...init,
     });
 
@@ -98,7 +96,6 @@ export async function request<T>(
     if (res.status >= 400 && res.status <= 599) {
       const logObj = {
         msg: `${method} ${path} response received`,
-
         status: res.status,
       };
 
@@ -108,7 +105,7 @@ export async function request<T>(
         logger.warn(logObj);
       } else {
         // ステータスコードが 500 ~ 599の場合は、エラーにする
-        // logger.error(logObj);
+        logger.error(logObj);
       }
 
       return {
