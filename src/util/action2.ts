@@ -2,7 +2,7 @@
 
 export const action2 = async (path: string, init?: RequestInit) => {
   const url = "https://jsonplaceholder.typicode.com" + path;
-  const method = init?.method ?? "GET";
+  const method = init?.method ?? "POST";
 
   const headers = new Headers({
     ...init?.headers,
